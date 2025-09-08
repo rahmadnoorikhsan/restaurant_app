@@ -3,8 +3,13 @@ import 'package:restaurant_app/data/model/restaurant_detail.dart';
 
 class DetailSliverAppBar extends StatelessWidget {
   final RestaurantDetail restaurant;
+  final List<Widget>? actions;
 
-  const DetailSliverAppBar({super.key, required this.restaurant});
+  const DetailSliverAppBar({
+    super.key, 
+    required this.restaurant, 
+    this.actions
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class DetailSliverAppBar extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 1,
       foregroundColor: colorScheme.primary,
-
+      actions: actions,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
