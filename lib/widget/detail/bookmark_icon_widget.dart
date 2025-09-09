@@ -14,18 +14,21 @@ class BookmarkIconWidget extends StatelessWidget {
         final isBookmarked = provider.isBookmarked(restaurant.id);
 
         return IconButton(
-          onPressed: () {
+          onPressed: () async {
             if (isBookmarked) {
-              provider.removeRestaurantById(restaurant.id);
+              await provider.removeRestaurantById(restaurant.id);
             } else {
-              provider.saveRestaurant(restaurant);
+              await provider.saveRestaurant(restaurant);
             }
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(provider.message),
-                duration: const Duration(seconds: 1),
-              ),
-            );
+
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(provider.message),
+                  duration: const Duration(seconds: 1),
+                ),
+              );
+            }
           },
           icon: Icon(
             isBookmarked ? Icons.bookmark : Icons.bookmark_border,
