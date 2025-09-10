@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:restaurant_app/static/restaurant_detail_result_state.dart';
+import 'package:restaurant_app/widget/detail/bookmark_icon_widget.dart';
 import 'package:restaurant_app/widget/detail/detail_restaurant_header.dart';
 import 'package:restaurant_app/widget/detail/detail_silver_appbar.dart';
 import 'package:restaurant_app/widget/detail/menu_list.dart';
@@ -18,9 +20,23 @@ class DetailView extends StatelessWidget {
 
     if (state is RestaurantDetailLoadedState) {
       final detailRestaurant = state.restaurant;
+      final restaurantForBookmark = Restaurant(
+        id: detailRestaurant.id,
+        name: detailRestaurant.name,
+        description: detailRestaurant.description,
+        pictureId: detailRestaurant.pictureId,
+        city: detailRestaurant.city,
+        rating: detailRestaurant.rating,
+      );
+
       return CustomScrollView(
         slivers: [
-          DetailSliverAppBar(restaurant: detailRestaurant),
+          DetailSliverAppBar(
+            restaurant: detailRestaurant,
+            actions: [
+              BookmarkIconWidget(restaurant: restaurantForBookmark)
+            ],
+          ),
           SliverPadding(
             padding: const EdgeInsets.all(20.0),
             sliver: SliverList(
